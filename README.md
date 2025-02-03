@@ -1,0 +1,1 @@
+https://blogapi.afunny.top/.netlify/functions/get-visits

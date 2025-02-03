@@ -14,7 +14,7 @@ async function connectToDatabase() {
   await client.connect();
 
   // 选择数据库
-  const db = client.db("article_stats"); // 替换为你的数据库名
+  const db = client.db("test"); // 替换为你的数据库名
   cachedDb = db;
   return db;
 }
