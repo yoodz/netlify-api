@@ -53,12 +53,21 @@ exports.handler = async (event, context) => {
             { $inc: { count: 1 } }, // 增加访问量
             { upsert: true }        // 如果不存在则创建
         );
-        const resultCount = await collection.findOne({ slug });
+        let resultCount;
+        let resultCountList;
+        if (slug === '/') {
+            const cursor = collection.find({});
+            resultCountList = await cursor.toArray();
+            // 打印查询结果
+            console.log(resultCountList);
+        } else {
+            resultCount = await collection.findOne({ slug });
+        }
 
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ slug, count: resultCount ? resultCount.count : 0 }),
+            body: JSON.stringify({ slug, count: resultCount ? resultCount.count : 0, resultCountList }),
         };
     } catch (err) {
         return {
