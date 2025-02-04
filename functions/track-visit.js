@@ -17,8 +17,22 @@ async function connectToDatabase() {
     cachedDb = client.db("test"); // 替换为你的数据库名
     return cachedDb;
 }
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',  // 允许的 HTTP 方法
+    'Access-Control-Allow-Headers': 'Content-Type',        // 允许的请求头
+    'Content-Type': 'application/json'
+}
 
 exports.handler = async (event, context) => {
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({ message: 'CORS preflight passed' })
+        };
+    }
+
     // 解析文章 slug
     const { slug } = event.queryStringParameters;
 
@@ -34,25 +48,22 @@ exports.handler = async (event, context) => {
         const collection = db.collection("visits");
 
         // 更新访问量
-        const result = await collection.updateOne(
+        await collection.updateOne(
             { slug },
             { $inc: { count: 1 } }, // 增加访问量
             { upsert: true }        // 如果不存在则创建
         );
+        const resultCount = await collection.findOne({ slug });
 
         return {
             statusCode: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',  // 允许的 HTTP 方法
-                'Access-Control-Allow-Headers': 'Content-Type',        // 允许的请求头
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ slug, count: result.modifiedCount }),
+            headers,
+            body: JSON.stringify({ slug, count: resultCount ? resultCount.count : 0 }),
         };
     } catch (err) {
         return {
             statusCode: 500,
+            headers,
             body: JSON.stringify({ error: err.message }),
         };
     }
