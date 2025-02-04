@@ -54,12 +54,16 @@ exports.handler = async (event, context) => {
             { upsert: true }        // 如果不存在则创建
         );
         let resultCount;
-        let resultCountList;
+        const formattedObject = {};
+
         if (slug === '/') {
             const cursor = collection.find({});
-            resultCountList = await cursor.toArray();
+            const resultCountList = await cursor.toArray();
+
+            resultCountList.forEach(item => {
+                formattedObject[item.slug] = item.count;
+            });
             // 打印查询结果
-            console.log(resultCountList);
         } else {
             resultCount = await collection.findOne({ slug });
         }
@@ -67,7 +71,7 @@ exports.handler = async (event, context) => {
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ slug, count: resultCount ? resultCount.count : 0, resultCountList }),
+            body: JSON.stringify({ slug, count: resultCount ? resultCount.count : 0, formattedObject }),
         };
     } catch (err) {
         return {
