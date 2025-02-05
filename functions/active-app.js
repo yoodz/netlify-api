@@ -1,4 +1,5 @@
 const { MongoClient } = require("mongodb");
+import dayjs from "dayjs";
 
 // MongoDB 连接字符串
 const uri = process.env.MONGODB_URI;
@@ -51,8 +52,8 @@ exports.handler = async (event, context) => {
         await collection.updateOne(
             { app },
             {
-                $set: { updateAt: new Date() }, // 更新操作：设置 age 字段为 30
-                $setOnInsert: { createdAt: new Date() } // 仅在插入时设置的字段
+                $set: { updateAt: dayjs().second() }, // 更新操作：设置 age 字段为 30
+                $setOnInsert: { createdAt: dayjs().second() } // 仅在插入时设置的字段
             }, // 增加访问量
             { upsert: true }        // 如果不存在则创建
         );
