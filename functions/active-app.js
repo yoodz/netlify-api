@@ -52,8 +52,8 @@ exports.handler = async (event, context) => {
         await collection.updateOne(
             { app },
             {
-                $set: { updateAt: dayjs().millisecond() }, // 更新操作：设置 age 字段为 30
-                $setOnInsert: { createdAt: dayjs().millisecond() } // 仅在插入时设置的字段
+                $set: { updateAt: Date.now() }, // 更新操作：设置 age 字段为 30
+                $setOnInsert: { createdAt: Date.now() } // 仅在插入时设置的字段
             }, // 增加访问量
             { upsert: true }        // 如果不存在则创建
         );
