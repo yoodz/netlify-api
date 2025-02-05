@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-import dayjs from "dayjs";
+const dayjs = require('dayjs')
 
 // MongoDB 连接字符串
 const uri = process.env.MONGODB_URI;
