@@ -49,7 +49,7 @@ exports.handler = async (event, context) => {
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ resultCountList }),
+            body: JSON.stringify({ resultCountList: resultCountList.map(item => item.app) }),
         };
     } catch (err) {
         return {
