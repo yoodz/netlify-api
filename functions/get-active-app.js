@@ -34,15 +34,6 @@ exports.handler = async (event, context) => {
         };
     }
 
-    // 解析文章 slug
-    const { app } = event.queryStringParameters;
-
-    if (!app) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ error: "Missing app parameter" }),
-        };
-    }
     const fiveMinutesAgo = dayjs().subtract(5, 'minute');
 
     // 获取时间戳（毫秒）
