@@ -34,7 +34,7 @@ exports.handler = async (event, context) => {
         };
     }
 
-    const fiveMinutesAgo = dayjs().subtract(5, 'minute');
+    const fiveMinutesAgo = dayjs().subtract(10, 'minute');
 
     // 获取时间戳（毫秒）
     const timestamp = fiveMinutesAgo.valueOf();
@@ -45,6 +45,11 @@ exports.handler = async (event, context) => {
             updateAt: { $gte: timestamp } // 5 分钟之内
           }).sort({ updateAt: -1 }); // 按时间倒序排列;
         const resultCountList = await cursor.toArray();
+
+        // 如果10min 内只有一个活动的 app 可能是空闲锁屏状态，不展示
+        if (resultCountList.length < 2) {
+            resultCountList = []
+        }
 
         return {
             statusCode: 200,
