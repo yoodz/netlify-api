@@ -42,14 +42,14 @@ exports.handler = async (event, context) => {
         const db = await connectToDatabase();
         const collection = db.collection("activeApp");
         const cursor = collection.find({
-            updateAt: { $gte: timestamp } // 5 分钟之内
+            updateAt: { $gte: timestamp } // 10 分钟之内
           }).sort({ updateAt: -1 }); // 按时间倒序排列;
-        let resultCountList = await cursor.toArray();
+        const resultCountList = await cursor.toArray();
 
         // 如果10min 内只有一个活动的 app 可能是空闲锁屏状态，不展示
-        if (resultCountList.length < 2) {
-            resultCountList = []
-        }
+        // if (resultCountList.length < 2) {
+        //     resultCountList = []
+        // }
 
         return {
             statusCode: 200,
