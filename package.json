@@ -11,6 +11,8 @@
   "description": "",
   "dependencies": {
     "dayjs": "^1.11.13",
-    "mongodb": "^6.13.0"
+    "geoip-lite": "^1.4.10",
+    "mongodb": "^6.13.0",
+    "ua-parser-js": "^2.0.1"
   }
 }
