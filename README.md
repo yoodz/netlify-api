@@ -10,3 +10,8 @@
 
 # 本地开发
 ntl dev
+
+
+# 报错
+{"error":"Cannot read properties of undefined (reading 'startsWith')"}
+没有数据库链接

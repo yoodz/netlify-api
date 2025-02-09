@@ -13,7 +13,7 @@ exports.handler = async (event, context) => {
     }
 
     const userAgent = event.headers['user-agent'];
-    const clientIp = event.headers['x-forwarded-for'] || event.headers['X-Forwarded-For'];
+    const clientIp = event.headers['x-forwarded-for']?.split(',')[0] || event.headers['remote-address'];
 
     const parser = new UAParser();
  
