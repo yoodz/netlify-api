@@ -45,13 +45,11 @@ exports.handler = async (event, context) => {
 
         return SuccessResponse({
             statusCode: 200,
-            headers,
             body: JSON.stringify({ slug, count: resultCount ? resultCount.count : 0, formattedObject }),
         });
     } catch (err) {
         return ErrorResponse({
             statusCode: 500,
-            headers,
             body: JSON.stringify({ error: err.message }),
         });
     }
