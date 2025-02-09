@@ -30,7 +30,7 @@ exports.handler = async (event, context) => {
         const collection = db.collection("logs");
         const { city, timezone, country, ll, area } = location || {};
         collection.insertOne({
-            ...event?.queryStringParameters,
+            ...JSON.parse(event.body || "{}"),
             clientIp,
             uaResult,
             createdAt: Date.now(),
@@ -42,7 +42,7 @@ exports.handler = async (event, context) => {
         })
 
         return SuccessResponse({
-            body: JSON.stringify({ }),
+            body: JSON.stringify({ result: true }),
         });
     } catch (err) {
         console.log(err, 'logs-40')
