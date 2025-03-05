@@ -23,9 +23,10 @@ exports.handler = async (event, context) => {
             .limit(pageSize);
 
         const results = await cursor.toArray();
+        const totalCount = await collection.countDocuments({}); // 或者使用 estimatedDocumentCount() 根据需求选择
 
         return SuccessResponse({
-            body: JSON.stringify(results),
+            body: JSON.stringify({ results, total: totalCount, page, pageSize }),
         });
     } catch (error) {
         return ErrorResponse({
