@@ -1,3 +1,6 @@
+/**
+ * 获取所有的rss 文章的列表
+ */
 const dayjs = require('dayjs')
 const { connectToDatabase } = require('../utils/db')
 const { SuccessResponse, ErrorResponse } = require('../utils/response')

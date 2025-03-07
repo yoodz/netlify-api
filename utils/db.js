@@ -9,7 +9,7 @@ async function connectToDatabase(dbName = 'test') {
         if (cachedDb) return cachedDb;
 
         // 连接 MongoDB
-        const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, maxPoolSize: 10 });
+        const client = new MongoClient(uri, { maxPoolSize: 10 });
         await client.connect();
 
         // 选择数据库
