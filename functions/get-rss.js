@@ -22,6 +22,7 @@ exports.handler = async (event, context) => {
         const collection = db.collection("article");
 
         const cursor = collection.find({})
+            .sort({ pubDate: -1 })
             .skip((currentPage - 1) * pageSize)
             .limit(pageSize);
 
