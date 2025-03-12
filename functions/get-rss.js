@@ -14,7 +14,7 @@ exports.handler = async (event, context) => {
     const { page, page_size } = event.queryStringParameters;
     const currentPage = parseInt(page, 10) || 1;
     // 限制页大小
-    const pageSize = Math.min(parseInt(page_size, 10) || 10, 10);
+    const pageSize = Math.min(parseInt(page_size, 10) || 20, 20);
     
 
     try {
