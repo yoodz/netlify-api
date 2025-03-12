@@ -13,7 +13,9 @@ exports.handler = async (event, context) => {
 
     const { page, page_size } = event.queryStringParameters;
     const currentPage = parseInt(page, 10) || 1;
-    const pageSize = parseInt(page_size, 10) || 10;
+    // 限制页大小
+    const pageSize = Math.min(parseInt(page_size, 10) || 10, 10);
+    
 
     try {
         const db = await connectToDatabase('blog-news');
