@@ -29,6 +29,7 @@ exports.handler = async (event, context) => {
             body: null
         });
     } catch (error) {
+        console.log(error, 'rss-activity-32')
         return ErrorResponse({
             body: JSON.stringify({ error: 'Unable to fetch data' }),
         });
