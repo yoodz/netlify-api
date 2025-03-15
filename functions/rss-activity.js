@@ -22,7 +22,7 @@ exports.handler = async (event, context) => {
 
         const result = await collection.updateOne(
             { _id: ObjectId.createFromHexString(id) }, // 查询条件
-            { $inc: { [pv]: 1 } }
+            { $inc: { pv: 1 } }
         );
 
         return SuccessResponse({
