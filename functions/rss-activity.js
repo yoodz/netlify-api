@@ -1,7 +1,7 @@
 /**
  * 文章访问统计
  */
-const { MongoClient } = require("mongodb");
+const { ObjectId } = require("mongodb");
 const { connectToDatabase } = require('../utils/db')
 const { SuccessResponse, ErrorResponse } = require('../utils/response')
 
@@ -21,7 +21,7 @@ exports.handler = async (event, context) => {
         const collection = db.collection("article");
 
         const result = await collection.updateOne(
-            { _id: new MongoClient.ObjectId(id) }, // 查询条件
+            { _id: ObjectId.createFromHexString(id) }, // 查询条件
             { $inc: { [pv]: 1 } }
         );
 
