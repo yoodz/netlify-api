@@ -33,6 +33,7 @@ exports.handler = async (event, context) => {
         let config = []
         let totalRss = 0
         // 只在首页获取的数据
+        console.log(page, page === 1, 'get-rss-36')
         if (page === 1) {
             // 获取config配置
             const configCollection = db.collection("config");
