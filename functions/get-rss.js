@@ -20,7 +20,6 @@ exports.handler = async (event, context) => {
     try {
         const db = await connectToDatabase('blog-news');
         const collection = db.collection("article");
-        const configCollection = db.collection("config");
 
         const cursor = collection.find({})
             .sort({ pubDate: -1 })
@@ -30,12 +29,23 @@ exports.handler = async (event, context) => {
         const results = await cursor.toArray();
         const totalCount = await collection.countDocuments({}); // 或者使用 estimatedDocumentCount() 根据需求选择
 
-        // 获取config配置
-        const configCursor = configCollection.find({})
-        const configResults = await configCursor.toArray();
+
+        let config = []
+        let totalRss = 0
+        // 只在首页获取的数据
+        if (page === 1) {
+            // 获取config配置
+            const configCollection = db.collection("config");
+            const configCursor = configCollection.find({})
+            config = await configCursor.toArray();
+
+            const rssCollection = db.collection("rss-url");
+            totalRss = await rssCollection.countDocuments({});
+            // 拿总的收录数据，成功的收录数据
+        }
 
         return SuccessResponse({
-            body: JSON.stringify({ results, total: totalCount, page, pageSize, config: configResults?.[0] }),
+            body: JSON.stringify({ results, total: totalCount, page, pageSize, config: configResults?.[0], totalRss }),
         });
     } catch (error) {
         return ErrorResponse({
