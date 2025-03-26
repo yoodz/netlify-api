@@ -45,7 +45,7 @@ exports.handler = async (event, context) => {
         }
 
         return SuccessResponse({
-            body: JSON.stringify({ results, total: totalCount, page, pageSize, config: configResults?.[0], totalRss }),
+            body: JSON.stringify({ results, total: totalCount, page, pageSize, config: config?.[0], totalRss }),
         });
     } catch (error) {
         console.log(error, 'get-rss-51')
