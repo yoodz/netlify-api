@@ -48,6 +48,7 @@ exports.handler = async (event, context) => {
             body: JSON.stringify({ results, total: totalCount, page, pageSize, config: configResults?.[0], totalRss }),
         });
     } catch (error) {
+        console.log(error, 'get-rss-51')
         return ErrorResponse({
             body: JSON.stringify({ error: 'Unable to fetch data' }),
         });
